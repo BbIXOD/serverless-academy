@@ -1,4 +1,4 @@
-import { SORT_TYPES } from './commands.js';
+import { EXIT, SORT_TYPES } from './commands.js';
 
 const FIND_DIGIT_PATTERN = '/\d/';
 const FIND_LETTER_PATTERN = '/[:alpha:]/';
@@ -19,5 +19,6 @@ export default {
     [SORT_TYPES.LETTER_COUNT]: excludeDecorator(FIND_DIGIT_PATTERN,
          values.sort((a, b) => a.length - b.length)),
     [SORT_TYPES.UNIQUE_WORDS]: excludeDecorator(FIND_DIGIT_PATTERN, getUnique),
-    [SORT_TYPES.UNIQUE_VALUES]: getUnique, 
+    [SORT_TYPES.UNIQUE_VALUES]: getUnique,
+    [EXIT]: process.exit.bind(null, 0),
 }
