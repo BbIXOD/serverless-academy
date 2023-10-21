@@ -17,9 +17,13 @@ export const chooseInput = async (rl, ...options) => {
     'enter': () => quitFlag = true
   }
 
-  const printWithSelected = () => {
+  const clearVariants = () => {
     rl.cursorTo(process.stdin, 0, process.stdout.rows - length)
-    rl.clearScreenDown(process.stdout);
+    rl.clearScreenDown(process.stdout)
+  }
+
+  const printWithSelected = () => {
+    clearVariants()
 
     for (const [key, option] of options.entries()) {
       const output = key === index ? `\x1b[34m>${option}\x1b[0m` :
@@ -30,8 +34,11 @@ export const chooseInput = async (rl, ...options) => {
 
   await rl.on('keypress', (_str, key) => {
     commands[key.name]()
-    if (quitFlag) rl.removeListener('keypress')
-    else printWithSelected()
+    if (quitFlag) {
+      rl.removeListener('keypress')
+      clearVariants()
+      return
+    }
   })
 
   return index
