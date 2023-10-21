@@ -32,14 +32,20 @@ export const chooseInput = async (rl, ...options) => {
     }
   }
 
-  await rl.on('keypress', (_str, key) => {
-    commands[key.name]()
-    if (quitFlag) {
-      rl.removeListener('keypress')
-      clearVariants()
-      return
-    }
-  })
+  const onKeyPress = () => {
+    rl.onсe('keypress', (_str, key) => {
+      commands[key.name]()
+      if (quitFlag) {
+        clearVariants()
+        resolve()
+      }
+      printWithSelected()
+      onKeyPress()
+    })
+  }
+
+  const listener = () => new Promise(onKeyPress())
+  await listener()
 
   return index
 }
