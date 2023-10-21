@@ -1,3 +1,3 @@
 'use strict'
-import rl from './readlineInstance.js'
 
+export const askName = ()
