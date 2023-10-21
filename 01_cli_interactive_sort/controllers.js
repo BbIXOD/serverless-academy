@@ -1,3 +1,4 @@
+'use strict'
 import { EXIT, SORT_TYPES } from './commands.js'
 
 const FIND_DIGIT_PATTERN = /\\d/
