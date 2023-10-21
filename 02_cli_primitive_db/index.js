@@ -24,5 +24,7 @@ while (true) {
   const age = (await rl.question("Enter user's name", name => name))
     .trim()
   user.age = age
+
+  
 }
 
