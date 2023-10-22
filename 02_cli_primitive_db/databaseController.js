@@ -16,7 +16,7 @@ export const find = name => {
   users.pop()
   for (const user of users) {
     const parsed = JSON.parse(user)
-    if (parsed.name === loweredName) return parsed
+    if (parsed.name.toLowerCase() === loweredName) return parsed
   }
   return { error: 'Can not find user' }
 }

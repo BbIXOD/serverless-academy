@@ -36,7 +36,7 @@ export const chooseInput = async (...options) => {
   }
 
   const clearVariants = () => {
-    readline.cursorTo(process.stdout, 0, process.stdout.rows - length - 1)
+    readline.cursorTo(process.stdout, 0, process.stdout.rows - length)
     readline.clearScreenDown(process.stdout)
   }
 
@@ -45,7 +45,7 @@ export const chooseInput = async (...options) => {
       const output = key === index
         ? `\x1b[34m> ${option}\x1b[0m`
         : '  ' + option
-      console.log(output)
+      process.stdout.write(output + (key === length - 1 ? '' : '\n'))
     }
   }
 
