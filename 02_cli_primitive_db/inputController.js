@@ -1,51 +1,77 @@
 'use strict'
+import readline from 'readline'
 
-export const chooseInput = async (rl, ...options) => {
-  let index = 0,
-    quitFlag = false
+export const init = () => process.stdin.setDefaultEncoding('utf-8')
+
+export const question = (querry) => {
+  return new Promise((resolve) => {
+    const callback = data => {
+      const prepared = data.toString().trim()
+      process.stdin.pause()
+      resolve(prepared)
+    }
+
+    process.stdout.write(querry)
+    process.stdin.resume()
+    process.stdin.once('data', data => callback(data))
+  })
+}
+
+export const chooseInput = async (...options) => {
+  let index = 0
+  let quitFlag = false
   const length = options.length
 
   const commands = {
-    'up': () => {
+    '\u001b[A': () => {
       if (index > 0) index--
       else index = length - 1
     },
-    'down': () => {
-      if (index < length) index++
+    '\u001b[B': () => {
+      if (index < length - 1) index++
       else index = 0
     },
-    'enter': () => quitFlag = true
+    '\r': () => quitFlag = true,
+    '\x03': () => process.exit(0)
   }
 
   const clearVariants = () => {
-    rl.cursorTo(process.stdin, 0, process.stdout.rows - length)
-    rl.clearScreenDown(process.stdout)
+    readline.cursorTo(process.stdout, 0, process.stdout.rows - length - 1)
+    readline.clearScreenDown(process.stdout)
   }
 
   const printWithSelected = () => {
-    clearVariants()
-
     for (const [key, option] of options.entries()) {
-      const output = key === index ? `\x1b[34m>${option}\x1b[0m` :
-        '  ' + option
-      console.log(output);
+      const output = key === index
+        ? `\x1b[34m> ${option}\x1b[0m`
+        : '  ' + option
+      console.log(output)
     }
   }
 
-  const onKeyPress = () => {
-    rl.onсe('keypress', (_str, key) => {
-      commands[key.name]()
-      if (quitFlag) {
-        clearVariants()
-        resolve()
-      }
-      printWithSelected()
-      onKeyPress()
-    })
+  const onKeyPress = (resolve, _reject, key) => {
+    if (!(key in commands)) return
+    commands[key]()
+    clearVariants()
+
+    if (quitFlag) {
+      process.stdin.removeListener('data', onKeyPress)
+      return resolve()
+    }
+    printWithSelected()
   }
 
-  const listener = () => new Promise(onKeyPress())
-  await listener()
+  const listenerPromise = (resolve, reject) => {
+    process.stdin.on('data', onKeyPress.bind(null, resolve, reject))
+  }
 
-  return index
+  process.stdin.setRawMode(true)
+  process.stdin.resume()
+  printWithSelected()
+  await new Promise(listenerPromise)
+  clearVariants()
+  process.stdin.setRawMode(false)
+  process.stdin.pause()
+
+  return options[index]
 }

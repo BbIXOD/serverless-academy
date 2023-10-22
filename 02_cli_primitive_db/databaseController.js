@@ -2,25 +2,21 @@
 import fs from 'fs'
 
 const FILE = 'db.txt'
-const SEPARATOR = ':sep:'
+const SEPARATOR = '\r'
 
 export const register = user => {
-  fs.appendFile(FILE, JSON.stringify(user), (err) =>
-   console.error(err))
+  fs.appendFileSync(FILE, JSON.stringify(user) + SEPARATOR)
 }
 
 export const find = name => {
-  return fs.readFile(FILE, (err, data) => {
-    if (err) {
-      console.error(err)
-      return
-    }
+  const data = fs.readFileSync(FILE, { encoding: 'utf-8' })
 
-    const loweredName = name.toLowerCase()
-    const users = JSON.parse(data.split(SEPARATOR))
-    for (const user of users) {
-      if (user.name.toLowerCase() === loweredName) return user
-    }
-    return 'Can not find user'
-  })
+  const loweredName = name.toLowerCase()
+  const users = data.split(SEPARATOR)
+  users.pop()
+  for (const user of users) {
+    const parsed = JSON.parse(user)
+    if (parsed.name === loweredName) return parsed
+  }
+  return { error: 'Can not find user' }
 }
