@@ -1,9 +1,11 @@
 'use strict'
+//file contains realization of commands
 import { EXIT, SORT_TYPES } from './commands.js'
 
 const FIND_DIGIT_PATTERN = /\\d/
 const FIND_LETTER_PATTERN = /[a-z]/i
 
+//excludes values which we don't want in the result
 const excludeDecorator = (pattern, callback) => values => {
   const filtered = values.filter(value => !pattern.test(value))
   return callback(filtered)

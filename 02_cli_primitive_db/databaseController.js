@@ -4,10 +4,12 @@ import fs from 'fs'
 const FILE = 'db.txt'
 const SEPARATOR = '\r'
 
+//add user to db
 export const register = user => {
   fs.appendFileSync(FILE, JSON.stringify(user) + SEPARATOR)
 }
 
+//find user by name
 export const find = name => {
   const data = fs.readFileSync(FILE, { encoding: 'utf-8' })
 
