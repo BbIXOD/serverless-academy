@@ -10,14 +10,14 @@ const messageCommand = async (text) => {
   process.exit(0)
 }
 
-const imageCommand = async (path) => {
+const photoCommand = async (path) => {
   await sendImage(path)
   process.exit(0)
 }
 
 program
   .name('bot-sender')
-  .description('Simple Telegram text and image sender')
+  .description('Simple Telegram text and photo sender')
   .version('0.0.7')
 
 program
@@ -27,9 +27,9 @@ program
   .action(messageCommand)
 
 program
-  .command('send-image')
-  .description('Send an image to telegram chat')
-  .argument('<image>')
-  .action(imageCommand)
+  .command('send-photo')
+  .description('Send an photo to telegram chat')
+  .argument('<photo>')
+  .action(photoCommand)
 
 program.parse(process.argv)
