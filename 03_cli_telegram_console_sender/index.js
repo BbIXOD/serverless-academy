@@ -1,7 +1,7 @@
 'use strict'
-//file catches commands and gives them to the bot.js
-import { Command } from "commander"
-import { sendMessage, sendImage } from "./bot.js"
+// file catches commands and gives them to the bot.js
+import { Command } from 'commander'
+import { sendMessage, sendImage } from './bot.js'
 
 const program = new Command()
 

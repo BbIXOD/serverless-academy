@@ -1,5 +1,5 @@
 'use strict'
-//set of commands
+// set of commands
 export const EXIT = 'exit'
 export const SORT_TYPES = {
   ALPHABETIC: '1',

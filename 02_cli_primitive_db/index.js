@@ -3,7 +3,7 @@ import readline from 'readline'
 import { chooseInput, question, setEncoding } from './inputController.js'
 import { register, find } from './databaseController.js'
 
-//search, but if we need so
+// search, but if we need so
 const search = res => {
   const AGREE = 'y'
   if (res === AGREE) {
@@ -15,7 +15,7 @@ const search = res => {
 
 setEncoding()
 
-//infinite user registration loop
+// infinite user registration loop
 while (true) {
   const name = await question("Enter user's name:")
   if (name === '') break
@@ -24,7 +24,7 @@ while (true) {
   console.log("Select user's gender:")
   const gender = await chooseInput('male', 'female')
   readline.moveCursor(process.stdout, 0, -1) // clear last line to
-  readline.clearLine(process.stdout)         // show result instead
+  readline.clearLine(process.stdout) // show result instead
   console.log("User's gender is: " + gender)
   user.gender = gender
 

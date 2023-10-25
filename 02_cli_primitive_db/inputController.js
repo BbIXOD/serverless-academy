@@ -3,8 +3,8 @@ import readline from 'readline'
 
 export const setEncoding = () => process.stdin.setDefaultEncoding('utf-8')
 
-//prints question and returns user input
-//don't used readline because later I need to off echo and readline doesn't
+// prints question and returns user input
+// don't used readline because later I need to off echo and readline doesn't
 // good for it. it can but switch between visibilities are lagging
 export const question = (querry) => {
   return new Promise((resolve) => {
@@ -20,7 +20,7 @@ export const question = (querry) => {
   })
 }
 
-//get menu where you can choose one option
+// get menu where you can choose one option
 export const chooseInput = async (...options) => {
   let index = 0
   let quitFlag = false
@@ -35,7 +35,9 @@ export const chooseInput = async (...options) => {
       if (index < length - 1) index++
       else index = 0
     },
-    '\r': () => quitFlag = true, // enter
+    '\r': () => {
+      quitFlag = true
+    }, // enter
     '\x03': () => process.exit(0) // ctrl + c
   }
 
@@ -44,17 +46,17 @@ export const chooseInput = async (...options) => {
     readline.clearScreenDown(process.stdout)
   }
 
-  //print variants
+  // print variants
   const printWithSelected = () => {
     for (const [key, option] of options.entries()) {
       const output = key === index
-        ? `\x1b[34m> ${option}\x1b[0m` //highlight selected
+        ? `\x1b[34m> ${option}\x1b[0m` // highlight selected
         : '  ' + option
       process.stdout.write(output + (key === length - 1 ? '' : '\n'))
     }
   }
 
-  //input handler
+  // input handler
   const onKeyPress = (resolve, _reject, key) => {
     if (!(key in commands)) return
     commands[key]()
