@@ -23,19 +23,18 @@ export const id = (msg) => {
 
 // responds on buttons pressing
 export const onQuery = (() => {
-  let city
-  let interval
+  const usersCities = {}
 
   const commands = {
     city: (id, data) => { // if command is city we need to give him interval chooser
-      city = data[1]
+      usersCities[id] = data[1]
       bot.sendMessage(id, 'Choose your interval', intervalChooseKeyboard)
     },
     interval: async (id, data) => { // after interval chosen give him forecast
-      interval = data[1]
-      const forecast = await preparedForecast(interval, city)
+      const interval = data[1]
+      const forecast = await preparedForecast(interval, usersCities[id])
 
-      await bot.sendMessage(id, `Weather in ${city}`)
+      await bot.sendMessage(id, `Weather in ${usersCities[id]}`)
       for (const item of forecast) {
         await bot.sendMessage(id, `Time: <b>${item.time}</b>\nWeather:` +
         `<b>${item.weather}</b>\nTemperature: <b>${item.temperature}</b>`,

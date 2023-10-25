@@ -1,0 +1,20 @@
+{
+  "name": "05_telegram_bot_exchange_rates",
+  "version": "1.0.0",
+  "description": "Simple exchange course find bot",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BbIXOD/serverless-academy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BbIXOD/serverless-academy/issues"
+  },
+  "homepage": "https://github.com/BbIXOD/serverless-academy#readme"
+}
