@@ -50,8 +50,8 @@ export const preparedForecast = async (interval, city) => {
   const forecast = await getHourlyForcast(city)
 
   const result = forecast
-    .filter((_item, index) => index % interval === 0)
     .splice(0, forecastLimit) // or move it to controller?
+    .filter((_item, index) => index % interval === 0)
     .map(item => ({
       time: item.dt_txt,
       temperature: item.main.temp,
