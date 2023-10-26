@@ -20,8 +20,10 @@ const execute = () => {
   })
 }
 
+rl.on('error', err => console.error(err))
+
 rl.question('Input data for initial array:', input => {
-  data.push(...input.split(' '))
+  data.push(...input.trim().split(' '))
   execute()
 })
 

@@ -9,7 +9,7 @@ const forecastLimit = process.env.FORECAST_LIMIT
 const getLocation = async (city) => {
   const url = 'http://api.openweathermap.org/geo/1.0/direct?' +
     `q=${city}&appid=${apiKey}`
-  const response = await axios.get(url)
+  const response = await axios.get(url).catch(err => console.error(err))
   const data = response.data[0]
 
   const prepared = {
@@ -41,7 +41,7 @@ const getHourlyForcast = async (city) => {
 
   const url = 'https://api.openweathermap.org/data/2.5/forecast?' +
   `lat=${lat}&lon=${lon}&appid=${apiKey}&exclude=current,minutely,daily,alerts`
-  const response = await axios.get(url)
+  const response = await axios.get(url).catch(err => console.error(err))
   return response.data.list
 }
 

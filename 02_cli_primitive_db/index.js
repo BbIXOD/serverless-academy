@@ -1,6 +1,6 @@
 'use strict'
 import readline from 'readline'
-import { chooseInput, question, setEncoding } from './inputController.js'
+import { chooseInput, question, initialize } from './inputController.js'
 import { register, find } from './databaseController.js'
 
 // search, but if we need so
@@ -13,7 +13,7 @@ const search = res => {
   }
 }
 
-setEncoding()
+initialize()
 
 // infinite user registration loop
 while (true) {

@@ -23,3 +23,5 @@ bot.onText(/\/id/, (msg) => {
   const id = msg.from.id
   bot.sendMessage(id, `Your ID: <code>${id}</code>`, { parse_mode: 'html' })
 })
+
+bot.on('error', err => console.log(err))

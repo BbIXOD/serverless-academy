@@ -46,6 +46,7 @@ export const onQuery = (() => {
   return (querry) => { // get function by button callback
     const id = querry.message.chat.id
     const data = querry.data.split(SEPARATOR)
-    commands[data[0]](id, data)
+    if (data[0] in commands) commands[data[0]](id, data)
+    else console.error(`Unknown command: ${data}`);
   }
 })()

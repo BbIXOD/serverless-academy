@@ -1,7 +1,10 @@
 'use strict'
 import readline from 'readline'
 
-export const setEncoding = () => process.stdin.setDefaultEncoding('utf-8')
+export const initialize = () => {
+  process.stdin.setDefaultEncoding('utf-8')
+  process.stdin.on('error', err => console.error(err))
+}
 
 // prints question and returns user input
 // don't used readline because later I need to off echo and readline doesn't
