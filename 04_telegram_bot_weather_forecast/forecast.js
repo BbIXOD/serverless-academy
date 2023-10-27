@@ -21,12 +21,12 @@ const getLocation = async (city) => {
 
 // cache results of async function (unexpected)
 const cacheAsyncFunction = callback => {
-  const results = {}
+  const results = new Map()
   return async (...args) => {
-    if (results[args]) return results[args]
+    if (results.has(args)) return results.get(args)
 
     const result = await callback(...args)
-    results[args] = result
+    results.set(args, result)
     return result
   }
 }

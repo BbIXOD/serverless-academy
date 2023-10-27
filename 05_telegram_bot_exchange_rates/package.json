@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/BbIXOD/serverless-academy/issues"
   },
-  "homepage": "https://github.com/BbIXOD/serverless-academy#readme"
+  "homepage": "https://github.com/BbIXOD/serverless-academy#readme",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "node-telegram-bot-api": "^0.63.0"
+  }
 }
