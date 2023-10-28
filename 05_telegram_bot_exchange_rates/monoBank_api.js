@@ -1,5 +1,5 @@
 'use strict'
-// file works with bank api
+// file works with MonoBank api
 import axios from 'axios'
 import * as globals from './globals.js'
 
@@ -35,5 +35,5 @@ export const getCurrencyByName = async (from, to) => {
       return { rateBuy: item.rateBuy, rateSell: item.rateSell }
     }
   }
-  return { error: 'Can not find currency' }
+  return globals.CURRENCY_ERROR
 }
