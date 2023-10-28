@@ -1,13 +1,13 @@
 export const currencyNames = {
   USD: 'USD',
   EUR: 'EUR',
-  HRN: 'UAH',
+  UAH: 'UAH',
 }
 
 export const currencyCodes = {
   [currencyNames.USD]: 840,
   [currencyNames.EUR]: 978,
-  [currencyNames.HRN]: 980,
+  [currencyNames.UAH]: 980,
 }
 
 //maybe we need separate file for errors

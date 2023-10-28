@@ -40,8 +40,8 @@ bot.on('message', async msg => {
   const id = msg.from.id
   const text = msg.text
 
-  const currencyMono = mono.getCurrencyByName(text, globals.currencyNames.HRN)
-  const currencyPrivat = privat.getCurrencyByName(text, globals.currencyNames.HRN)
+  const currencyMono = mono.getCurrencyByName(text, globals.currencyNames.UAH)
+  const currencyPrivat = privat.getCurrencyByName(text, globals.currencyNames.UAH)
   logCurrency(await currencyMono, 'MonoBank', id)
   logCurrency(await currencyPrivat, 'PrivatBank', id)
 })
