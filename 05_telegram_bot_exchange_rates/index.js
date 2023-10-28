@@ -21,12 +21,12 @@ const markup = {
 
 const bot = new TelegramBot(token, { polling: true })
 
-const logCurrency = (data, label, msg) => {
+const logCurrency = (data, label, id) => {
   if (data.error) {
-    bot.sendMessage(id, `Error in ${label}: ${currency.error}`)
+    bot.sendMessage(id, `Error in ${label}: ${data.error}`)
     return
   }
-  bot.sendMessage(id, `${label}\nBuy rate: ${currency.rateBuy}\nSell rate: ${currency.rateSell}`)
+  bot.sendMessage(id, `${label}\nBuy rate: ${data.rateBuy}\nSell rate: ${data.rateSell}`)
 }
 
 //start the bot and get keyboard
@@ -42,8 +42,8 @@ bot.on('message', async msg => {
 
   const currencyMono = mono.getCurrencyByName(text, globals.currencyNames.HRN)
   const currencyPrivat = privat.getCurrencyByName(text, globals.currencyNames.HRN)
-  logCurrency(await currencyMono, 'MonoBank', msg)
-  logCurrency(await currencyPrivat, 'PrivatBank', msg)
+  logCurrency(await currencyMono, 'MonoBank', id)
+  logCurrency(await currencyPrivat, 'PrivatBank', id)
 })
 
 bot.on('error', err => console.log(err))

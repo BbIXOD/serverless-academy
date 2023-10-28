@@ -1,7 +1,7 @@
 export const currencyNames = {
   USD: 'USD',
   EUR: 'EUR',
-  HRN: 'HRN',
+  HRN: 'UAH',
 }
 
 export const currencyCodes = {
