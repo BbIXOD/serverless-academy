@@ -10,9 +10,8 @@ const files = await controllers.getFilesInDir(PATH)
 const promises = []
 const timer = new Timer()
 
-// returns all values which appeared more than once
-const presenceCount = async (files, min) => {
-  const values = await controllers.getUniqueForAllFiles(files)
+// returns all values which appeared more than min times
+const presenceCount = (values, min) => {
   const unique = new Set(values)
   const counts = controllers.countItemsInArray(unique, values)
   let counter = 0
@@ -25,30 +24,29 @@ const presenceCount = async (files, min) => {
 }
 
 // logs count of unique values
-const uniqueCount = async files => {
-  const values = await controllers.getUniqueForAllFiles(files)
+const uniqueCount = values => {
   const unique = new Set(values)
 
   console.log(`Unique values: ${unique.size}`)
 }
 
-const presenceInEvery = async files => {
-  const counter = await presenceCount(files, files.length)
+const presenceInEvery = (values, length) => {
+  const counter = presenceCount(values, length)
   console.log(`Files present in every file: ${counter}`)
 }
 
-const presenceInSome = async (files, min) => {
-  const counter = await presenceCount(files, min)
+const presenceInSome = (files, min) => {
+  const counter = presenceCount(values, min)
   console.log(`Files present in at least ${min} files: ${counter}`)
 }
 
 timer.start()
 
-promises.push(uniqueCount(files))
-promises.push(presenceInEvery(files))
-promises.push(presenceInSome(files, MIN_INCLUSION))
+const values = await controllers.getUniqueForAllFiles(files)
 
-Promise.all(promises).then(() => {
-  timer.stop()
-  console.log(`Elapsed time: ${timer.getTime()}`)
-})
+uniqueCount(values)
+presenceInEvery(values, files.length)
+presenceInSome(values, MIN_INCLUSION)
+
+timer.stop()
+console.log(`Elapsed time: ${timer.getTime()}`)
