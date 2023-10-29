@@ -26,21 +26,19 @@ const uniqueCount = async files => {
   const values = await controllers.getUniqueForAllFiles(files)
   const unique = new Set(values)
 
-  console.log(unique.size)
+  console.log(`Unique values: ${unique.size}`)
 }
 
 const presenceInEvery = async files => {
   const counter = await presenceCount(files, files.length)
-  console.log(counter)
+  console.log(`Files present in every file: ${counter}`)
 }
 
 const presenceInSome = async (files, min) => {
   const counter = await presenceCount(files, min)
-  console.log(counter)
+  console.log(`Files present in at least ${min} files: ${counter}`)
 }
 
 uniqueCount(files)
 presenceInEvery(files)
 presenceInSome(files, MIN_INCLUSION)
-
-// controllers.getUniqueInFile('./data/out1.txt')
