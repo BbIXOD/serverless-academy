@@ -1,11 +1,14 @@
 'use strict'
-// today all will be in one file
+// like a main file
 import * as controllers from './controllers.js'
+import Timer from './timer.js'
 
 const PATH = './data'
 const MIN_INCLUSION = 10
 
 const files = await controllers.getFilesInDir(PATH)
+const promises = []
+const timer = new Timer()
 
 // returns all values which appeared more than once
 const presenceCount = async (files, min) => {
@@ -39,6 +42,13 @@ const presenceInSome = async (files, min) => {
   console.log(`Files present in at least ${min} files: ${counter}`)
 }
 
-uniqueCount(files)
-presenceInEvery(files)
-presenceInSome(files, MIN_INCLUSION)
+timer.start()
+
+promises.push(uniqueCount(files))
+promises.push(presenceInEvery(files))
+promises.push(presenceInSome(files, MIN_INCLUSION))
+
+Promise.all(promises).then(() => {
+  timer.stop()
+  console.log(`Elapsed time: ${timer.getTime()}`)
+})
