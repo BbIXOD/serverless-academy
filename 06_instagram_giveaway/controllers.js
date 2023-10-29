@@ -1,12 +1,12 @@
 'use strict'
-//here all functions main file uses
+// here all functions main file uses
 import fs from 'fs'
 import util from 'util'
 import path from 'path'
 
 const readDir = util.promisify(fs.readdir)
 
-//returns array of files in directory
+// returns array of files in directory
 export const getFilesInDir = async dirPath => {
   return await readDir(dirPath)
     .then(data => data.map(item => path.join(dirPath, item)))
@@ -16,7 +16,7 @@ export const getFilesInDir = async dirPath => {
     })
 }
 
-//returns array of unique values which were separated by \n
+// returns array of unique values which were separated by \n
 export const getUniqueInFile = fileName => {
   const values = []
   const stream = fs.createReadStream(fileName, { encoding: 'utf-8' })
@@ -26,14 +26,13 @@ export const getUniqueInFile = fileName => {
   stream.on('data', chunk => {
     const lines = chunk.split('\n')
 
-    if (unfinished) { //finish previous line
-      values.push(last + lines.shift()) //add directly to set
+    if (unfinished) { // finish previous line
+      values.push(last + lines.shift()) // add directly to set
       unfinished = false
-    }
-    else if (chunk[0] === '\n') lines.shift() //remove empty line
+    } else if (chunk[0] === '\n') lines.shift() // remove empty line
 
-    if (chunk[chunk.length - 1] === '\n' && chunk.length > 1) lines.pop() //same + prepare for finishing
-    else { 
+    if (chunk[chunk.length - 1] === '\n' && chunk.length > 1) lines.pop() // same + prepare for finishing
+    else {
       last = lines.pop()
       unfinished = true
     }
@@ -46,23 +45,23 @@ export const getUniqueInFile = fileName => {
   }))
 }
 
-//returns array contains unique values of each, so if same value appears in different files it will be shown more than once
+// returns array contains unique values of each, so if same value appears in different files it will be shown more than once
 export const getUniqueForAllFiles = async files => {
-    const values = []
-    const promises = []
-  
-    for (const file of files) {
-      const promise = getUniqueInFile(file)
-      promises.push(promise)
-      promise.then(data => values.push(...data))
-    }
+  const values = []
+  const promises = []
 
-    await Promise.all(promises)
+  for (const file of files) {
+    const promise = getUniqueInFile(file)
+    promises.push(promise)
+    promise.then(data => values.push(...data))
+  }
 
-    return values
+  await Promise.all(promises)
+
+  return values
 }
 
-//counts how many times each value of set appears in array
+// counts how many times each value of set appears in array
 export const countItemsInArray = (set, array) => {
   const inputs = {}
 
