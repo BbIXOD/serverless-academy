@@ -3,6 +3,7 @@
 import fs from 'fs'
 import util from 'util'
 import path from 'path'
+import readline from 'readline'
 
 const readDir = util.promisify(fs.readdir)
 
@@ -17,32 +18,20 @@ export const getFilesInDir = async dirPath => {
 }
 
 // returns array of unique values which were separated by \n
-export const getUniqueInFile = fileName => {
-  const values = []
-  const stream = fs.createReadStream(fileName, { encoding: 'utf-8' })
-  let last
-  let unfinished = false
+export const getUniqueInFile = async fileName => {
+  const uniqueValues = new Set();
 
-  stream.on('data', chunk => {
-    const lines = chunk.split('\n')
+  const fileStream = fs.createReadStream(fileName, { encoding: 'utf-8' });
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity, 
+  });
 
-    if (unfinished) { // finish previous line
-      values.push(last + lines.shift()) // add directly to set
-      unfinished = false
-    } else if (chunk[0] === '\n') lines.shift() // remove empty line
+  for await (const line of rl) uniqueValues.add(line);
 
-    if (chunk[chunk.length - 1] === '\n' && chunk.length > 1) lines.pop() // same + prepare for finishing
-    else {
-      last = lines.pop()
-      unfinished = true
-    }
+  rl.close();
 
-    values.push(...lines)
-  })
-
-  return new Promise(resolve => stream.on('end', () => {
-    resolve(Array.from(new Set(values)))
-  }))
+  return Array.from(uniqueValues);
 }
 
 // returns array contains unique values of each, so if same value appears in different files it will be shown more than once
