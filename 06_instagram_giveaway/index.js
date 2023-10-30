@@ -3,8 +3,8 @@
 import * as controllers from './controllers.js'
 import Timer from './timer.js'
 
-const path = './data'//process.env.PATH
-const minInclusion = 10//process.env.MIN_INCLUSION
+const path = process.env.PATH
+const minInclusion = process.env.MIN_INCLUSION
 
 const files = await controllers.getFilesInDir(path)
 const promises = []
@@ -14,7 +14,7 @@ const timer = new Timer()
 const presenceCount = (counts, min) => {
   let counter = 0
 
-  for (const count of counts.values()) {
+  for (const count of counts) {
     if (count >= min) counter++
   }
 
@@ -23,9 +23,7 @@ const presenceCount = (counts, min) => {
 
 // logs count of unique values
 const uniqueCount = values => {
-  const unique = new Set(values)
-
-  console.log(`Unique values: ${unique.size}`)
+  console.log(`Unique values: ${values.size || values.length}`)
 }
 
 const presenceInEvery = (counts, length) => {
@@ -40,12 +38,10 @@ const presenceInSome = (counts, min) => {
 
 timer.start()
 
-const valuesGen = controllers.getUniqueForAllFiles(files)
-const counted = await controllers.countItemsInArray(valuesGen)
-
+const counted = await controllers.countItemsInArray(files)
 uniqueCount(counted)
-presenceInEvery(counted, files.length)
-presenceInSome(counted, minInclusion)
+presenceInEvery(counted.values(), files.length)
+presenceInSome(counted.values(), minInclusion)
 
 timer.stop()
 console.log(`Elapsed time: ${timer.getTime()}`)

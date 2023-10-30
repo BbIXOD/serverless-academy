@@ -38,18 +38,18 @@ export const getUniqueInFile = fileName => {
 }
 
 // returns array contains unique values of each, so if same value appears in different files it will be shown more than once
-export async function* getUniqueForAllFiles (files) {
+async function* getUniqueForAllFiles (files) {
 
   for (const file of files) {
-    const promise = getUniqueInFile(file)
-    yield await promise
+    yield await getUniqueInFile(file)
       .then(data => data)
       .catch(err => console.error(err))
   }
 }
 
 // counts how many times each value of set appears in array
-export const countItemsInArray = async (arrayGen) => {
+export const countItemsInArray = async (files) => {
+  const arrayGen = getUniqueForAllFiles(files)
   const inputs = new Map()
 
   for await (const item of arrayGen) {
