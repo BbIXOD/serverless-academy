@@ -11,8 +11,7 @@ const promises = []
 const timer = new Timer()
 
 // returns all values which appeared more than min times
-const presenceCount = (values, min) => {
-  const counts = controllers.countItemsInArray(values)
+const presenceCount = (counts, min) => {
   let counter = 0
 
   for (const count of counts.values()) {
@@ -29,23 +28,24 @@ const uniqueCount = values => {
   console.log(`Unique values: ${unique.size}`)
 }
 
-const presenceInEvery = (values, length) => {
-  const counter = presenceCount(values, length)
+const presenceInEvery = (counts, length) => {
+  const counter = presenceCount(counts, length)
   console.log(`Files present in every file: ${counter}`)
 }
 
-const presenceInSome = (files, min) => {
-  const counter = presenceCount(values, min)
+const presenceInSome = (counts, min) => {
+  const counter = presenceCount(counts, min)
   console.log(`Files present in at least ${min} files: ${counter}`)
 }
 
 timer.start()
 
-const values = await controllers.getUniqueForAllFiles(files)
+const valuesGen = controllers.getUniqueForAllFiles(files)
+const counted = await controllers.countItemsInArray(valuesGen)
 
-uniqueCount(values)
-presenceInEvery(values, files.length)
-presenceInSome(values, minInclusion)
+uniqueCount(counted)
+presenceInEvery(counted, files.length)
+presenceInSome(counted, minInclusion)
 
 timer.stop()
 console.log(`Elapsed time: ${timer.getTime()}`)
