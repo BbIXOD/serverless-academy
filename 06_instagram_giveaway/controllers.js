@@ -1,15 +1,12 @@
 'use strict'
 // here all functions main file uses
-import fs from 'fs'
-import util from 'util'
+import { readdir} from 'fs/promises'
+import { createReadStream } from 'fs'
 import path from 'path'
-import readline from 'readline'
-
-const readDir = util.promisify(fs.readdir)
 
 // returns array of files in directory
 export const getFilesInDir = async dirPath => {
-  return await readDir(dirPath)
+  return await readdir(dirPath)
     .then(data => data.map(item => path.join(dirPath, item)))
     .catch(err => {
       console.error(err)
@@ -20,7 +17,7 @@ export const getFilesInDir = async dirPath => {
 // returns array of unique values which were separated by \n
 export const getUniqueInFile = fileName => {
   const values = new Set()
-  const stream = fs.createReadStream(fileName, { encoding: 'utf-8' })
+  const stream = createReadStream(fileName, { encoding: 'utf-8' })
   let lastLine = ''
 
   stream.on('data', chunk => {
