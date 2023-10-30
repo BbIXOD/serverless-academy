@@ -3,10 +3,10 @@
 import * as controllers from './controllers.js'
 import Timer from './timer.js'
 
-const PATH = './data'
-const MIN_INCLUSION = 10
+const path = process.env.PATH
+const minInclusion = process.env.MIN_INCLUSION
 
-const files = await controllers.getFilesInDir(PATH)
+const files = await controllers.getFilesInDir(path)
 const promises = []
 const timer = new Timer()
 
@@ -46,7 +46,7 @@ const values = await controllers.getUniqueForAllFiles(files)
 
 uniqueCount(values)
 presenceInEvery(values, files.length)
-presenceInSome(values, MIN_INCLUSION)
+presenceInSome(values, minInclusion)
 
 timer.stop()
 console.log(`Elapsed time: ${timer.getTime()}`)
