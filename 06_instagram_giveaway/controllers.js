@@ -15,35 +15,31 @@ export const getFilesInDir = async dirPath => {
 }
 
 // returns array of unique values which were separated by \n
-export const getUniqueInFile = fileName => {
-  const values = new Set()
+export const getUniqueInFile = async (fileName) => {
+  const unique = new Set()
   const stream = createReadStream(fileName, { encoding: 'utf-8' })
   let lastLine = ''
 
-  stream.on('data', chunk => {
+  for await (const chunk of stream) {
     const lines = chunk.split('\n')
 
     for ( const line of lines.slice(1, -1) ) { //first and last are handled separate
-      values.add(line)
+      unique.add(line)
     }
 
-    values.add(lastLine + lines[0])
+    unique.add(lastLine + lines[0])
     lastLine = lines[lines.length - 1]
-  })
+  }
 
-  return new Promise(resolve => stream.on('end', () => {
-    if (lastLine !== '') values.add(lastLine)
-    resolve(Array.from(values))
-  }))
+  unique.add(lastLine)
+  return unique
 }
 
-// returns array contains unique values of each, so if same value appears in different files it will be shown more than once
+// still work with chunk, but for all files
 async function* getUniqueForAllFiles (files) {
 
   for (const file of files) {
     yield await getUniqueInFile(file)
-      .then(data => data)
-      .catch(err => console.error(err))
   }
 }
 
@@ -52,9 +48,9 @@ export const countItemsInArray = async (files) => {
   const arrayGen = getUniqueForAllFiles(files)
   const inputs = new Map()
 
-  for await (const item of arrayGen) {
-    for (const value of item) {
-      inputs.set(value, (inputs.has(value) ? inputs.get(value) + 1 : 1))
+  for await (const chunk of arrayGen) {
+    for (const item of chunk) {
+      inputs.set(item, (inputs.has(item) ? inputs.get(item) + 1 : 1))
     }
   }
 
