@@ -3,8 +3,8 @@
 import * as controllers from './controllers.js'
 import Timer from './timer.js'
 
-const path = process.env.PATH
-const minInclusion = process.env.MIN_INCLUSION
+const path = './data'//process.env.PATH
+const minInclusion = 10//process.env.MIN_INCLUSION
 
 const files = await controllers.getFilesInDir(path)
 const promises = []
@@ -12,11 +12,10 @@ const timer = new Timer()
 
 // returns all values which appeared more than min times
 const presenceCount = (values, min) => {
-  const unique = new Set(values)
-  const counts = controllers.countItemsInArray(unique, values)
+  const counts = controllers.countItemsInArray(values)
   let counter = 0
 
-  for (const count of Object.values(counts)) {
+  for (const count of counts.values()) {
     if (count >= min) counter++
   }
 

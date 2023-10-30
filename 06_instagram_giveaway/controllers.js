@@ -54,11 +54,11 @@ export const getUniqueForAllFiles = async files => {
 }
 
 // counts how many times each value of set appears in array
-export const countItemsInArray = (set, array) => {
-  const inputs = {}
+export const countItemsInArray = (array) => {
+  const inputs = new Map()
 
   for (const item of array) {
-    inputs[item] = (inputs[item] || 0) + 1
+    inputs.set(item, (inputs.has(item) ? inputs.get(item) + 1 : 1))
   }
 
   return inputs
