@@ -15,5 +15,5 @@ bot.on('callback_query', controllers.onQuery)
 // just to get your conversation id
 bot.onText(/\/id/, controllers.id)
 
-//log all errors
+// log all errors
 bot.on('error', err => console.log(err))

@@ -3,11 +3,10 @@
 import * as controllers from './controllers.js'
 import Timer from './timer.js'
 
-const path = './data'//process.env.PATH
-const minInclusion = 10//process.env.MIN_INCLUSION
+const path = './data'// process.env.PATH
+const minInclusion = 10// process.env.MIN_INCLUSION
 
 const files = await controllers.getFilesInDir(path)
-const promises = []
 const timer = new Timer()
 
 // returns all values which appeared more than min times

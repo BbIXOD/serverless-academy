@@ -3,7 +3,7 @@
 import axios from 'axios'
 import * as globals from './globals.js'
 
-//this error is ok, because it caused by amount of requests
+// this error is ok, because it caused by amount of requests
 const MANY_REQUESTS_ERROR = 'ERR_BAD_REQUEST'
 
 // returns function which gets currencies from api or cached
@@ -17,7 +17,7 @@ export const currenciesGetter = () => {
         return res.data
       })
       .catch(err => {
-        if (err.code != MANY_REQUESTS_ERROR) console.error(err.code)
+        if (err.code !== MANY_REQUESTS_ERROR) console.error(err.code)
         return cache
       })
   }

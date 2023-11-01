@@ -8,7 +8,7 @@ export const getCurrencyByName = async (from, to) => {
     .then(res => res.data)
     .catch(error => { error })
   if (data.error) return data
-  
+
   for (const item of data) {
     if (item.ccy === from &&
       item.base_ccy === to) {

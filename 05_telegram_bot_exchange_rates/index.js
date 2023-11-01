@@ -7,7 +7,7 @@ import * as globals from './globals.js'
 
 process.env.NTBA_FIX_350 = 1 // to fix deprecation warning
 
-const token = '6801706322:AAHxwdpdWWuf4Is7BhQ5NTMGToYdeR2fWTU'//process.env.TELEGRAM_BOT_TOKEN
+const token = '6801706322:AAHxwdpdWWuf4Is7BhQ5NTMGToYdeR2fWTU'// process.env.TELEGRAM_BOT_TOKEN
 
 const markup = {
   reply_markup: {
@@ -15,7 +15,7 @@ const markup = {
       [globals.currencyNames.USD, globals.currencyNames.EUR]
     ],
     resize_keyboard: true,
-    one_time_keyboard: false,
+    one_time_keyboard: false
   }
 }
 
@@ -29,7 +29,7 @@ const logCurrency = (data, label, id) => {
   bot.sendMessage(id, `${label}\nBuy rate: ${data.rateBuy}\nSell rate: ${data.rateSell}`)
 }
 
-//start the bot and get keyboard
+// start the bot and get keyboard
 bot.onText(/\/start/, (msg) => {
   const id = msg.from.id
 

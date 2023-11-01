@@ -1,16 +1,16 @@
 'use strict'
-import axios from "axios";
+import axios from 'axios'
 
 const connectionTries = process.env.CONNECTION_TRIES || 3
 
-//finds property in data on any level of nesting
+// finds property in data on any level of nesting
 const findProperty = (data, property) => {
-  const querry = [ data ]
+  const querry = [data]
 
   for (let i = 0; i < querry.length; i++) {
     for (const key in querry[i]) {
       if (key === property) {
-        return { [key]: querry[i][key]}
+        return { [key]: querry[i][key] }
       }
       if (typeof querry[i][key] === 'object') {
         querry.push(querry[i][key])
@@ -21,15 +21,15 @@ const findProperty = (data, property) => {
   return { error: 'Cannot find property' }
 }
 
-//just a common get request, but we try try to get data couple of times
+// just a common get request, but we try try to get data couple of times
 const getJSONWithRetry = async (url) => {
-  for(let i = 0; i < connectionTries; i++) {
+  for (let i = 0; i < connectionTries; i++) {
     const response = await axios.get(url)
-    .then(res => res.data)
-    .catch(err => {
-      if (err.code === 'ENOTFOUND') return
-      console.log(err)
-    })
+      .then(res => res.data)
+      .catch(err => {
+        if (err.code === 'ENOTFOUND') return
+        console.log(err)
+      })
 
     if (response) return response
   }
@@ -37,10 +37,10 @@ const getJSONWithRetry = async (url) => {
   return { error: 'The endpoint is unavailable' }
 }
 
-//gets property from response
+// gets property from response
 export const getResProperty = async (url, property) => {
   const response = await getJSONWithRetry(url)
-  
+
   if (response.error) return response
   return findProperty(response, property)
 }

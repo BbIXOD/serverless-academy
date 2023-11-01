@@ -1,6 +1,6 @@
 'use strict'
 // here all functions main file uses
-import { readdir} from 'fs/promises'
+import { readdir } from 'fs/promises'
 import { createReadStream } from 'fs'
 import path from 'path'
 
@@ -23,7 +23,7 @@ export const getUniqueInFile = async (fileName) => {
   for await (const chunk of stream) {
     const lines = chunk.split('\n')
 
-    for ( const line of lines.slice(1, -1) ) { //first and last are handled separate
+    for (const line of lines.slice(1, -1)) { // first and last are handled separate
       unique.add(line)
     }
 
@@ -36,8 +36,7 @@ export const getUniqueInFile = async (fileName) => {
 }
 
 // still work with chunk, but for all files
-async function* getUniqueForAllFiles (files) {
-
+async function * getUniqueForAllFiles (files) {
   for (const file of files) {
     yield await getUniqueInFile(file)
   }

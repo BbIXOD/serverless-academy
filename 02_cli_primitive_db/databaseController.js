@@ -20,8 +20,7 @@ export const find = name => {
     try {
       const parsed = JSON.parse(user)
       if (parsed.name.toLowerCase() === loweredName) return parsed
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err)
     }
   }
