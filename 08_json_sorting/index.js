@@ -11,9 +11,20 @@ const urls = process.env.URLS || [
 
 const property = process.env.PROPERTY || 'isDone'
 
+let falseCount = 0,
+  trueCount = 0
+
 //so, we check every url
 for (const url of urls) {
   const data = await api.getResProperty(url, property)
   if (data.error) console.error(`[Fail] ${url}: ${data.error}`)
-  else console.log(`[Success] ${url}: ${property} - ${data[property]}`)
+  else {
+    const value = data[property]
+    console.log(`[Success] ${url}: ${property} - ${value}`)
+
+    if (value) trueCount++
+    else falseCount++
+  }
 }
+console.log(`\nFound true values: ${trueCount},`)
+console.log(`Found false values: ${falseCount}`)
