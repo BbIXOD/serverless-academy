@@ -24,6 +24,12 @@ const server = http.createServer((req, res) => {
         something: { some: { property: 'hello' }, some2: { isDone: true } }
       }))
       break
+    case '/pro':  
+    res.end(JSON.stringify({
+      result: 'hard',
+      code: { code: 200, isNaN: false },
+      something: [ { property: 'hello' }, { isDone: true } ]
+    }))
     default:
       res.end(JSON.stringify({ result: 'not found', code: 404 }))
       break

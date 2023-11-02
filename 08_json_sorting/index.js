@@ -5,7 +5,8 @@ const urls = process.env.URLS || [
   // 'https://jsonbase.com/sls-team/json-793',
   'http://localhost:3000/easy',
   'http://localhost:3000/medium',
-  'http://localhost:3000/hard'
+  'http://localhost:3000/hard',
+  'http://localhost:3000/pro'
 ]
 
 const property = process.env.PROPERTY || 'isDone'
