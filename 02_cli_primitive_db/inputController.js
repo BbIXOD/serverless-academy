@@ -1,5 +1,5 @@
 'use strict'
-import inquirer from "inquirer"
+import inquirer from 'inquirer'
 
 const NAME = 'input'
 
@@ -18,18 +18,17 @@ const getPromptPromise = options => {
 // prints question and returns user input
 export const question = (querry, defaultPrompt) => {
   return getPromptPromise({
-      type: 'input',
-      message: querry,
-      default: defaultPrompt,
-    })
-
+    type: 'input',
+    message: querry,
+    default: defaultPrompt
+  })
 }
 
 // get menu where you can choose one option
 export const chooseInput = (querry, ...choises) => {
   return getPromptPromise({
-      type: 'list',
-      message: querry,
-      choices: choises
-    })
+    type: 'list',
+    message: querry,
+    choices: choises
+  })
 }

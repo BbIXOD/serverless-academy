@@ -3,7 +3,7 @@
 import axios from 'axios'
 
 const apiKey = process.env.WEATHER_API_KEY
-const forecastLimit = process.env.FORECAST_LIMIT
+const FORECASTS_LIMIT = 8 // how many forecasts will be returned 8 for 24 hours because we forecast shown for 3 hours
 
 // get location by city name
 const getLocation = async (city) => {
@@ -50,7 +50,7 @@ export const preparedForecast = async (interval, city) => {
   const forecast = await getHourlyForcast(city)
 
   const result = forecast
-    .splice(0, forecastLimit) // or move it to controller?
+    .splice(0, FORECASTS_LIMIT) // or move it to controller?
     .filter((_item, index) => index % interval === 0)
     .map(item => ({
       time: item.dt_txt,

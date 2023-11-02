@@ -5,7 +5,7 @@ import { preparedForecast } from './forecast.js'
 import { cityChooseKeyboard, intervalChooseKeyboard } from './keyboards.js'
 
 const token = process.env.TELEGRAM_BOT_TOKEN
-const SEPARATOR = process.env.SEPARATOR
+const SEPARATOR = '::'
 
 export const bot = new TelegramBot(token, { polling: true })
 

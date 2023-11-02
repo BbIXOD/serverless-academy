@@ -16,10 +16,10 @@ const main = async () => {
     const name = await question("Enter user's name:")
     if (name === '') break
     const user = { name }
-  
+
     user.gender = await chooseInput("Select user's gender:", 'male', 'female')
     user.age = await question("Enter user's age:")
-  
+
     register(user)
   }
 }
@@ -27,4 +27,3 @@ const main = async () => {
 await main()
 const doSearch = await question('Perform search? (y/n):')
 if (doSearch === AGREE) search()
-

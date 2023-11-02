@@ -9,7 +9,7 @@ const findProperty = (data, property) => {
 
   for (let i = 0; i < querry.length; i++) {
     for (const key in querry[i]) {
-      if (key === property) { //really don't know how will be better to remove it for arrays
+      if (key === property) { // really don't know how will be better to remove it for arrays
         return { [key]: querry[i][key] }
       }
       if (typeof querry[i][key] === 'object' || Array.isArray(querry[i][key])) {
