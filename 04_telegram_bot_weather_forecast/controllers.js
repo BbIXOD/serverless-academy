@@ -33,6 +33,7 @@ export const onQuery = (() => {
     interval: async (id, data) => { // after interval chosen give him forecast
       const interval = data[1]
       const forecast = await preparedForecast(interval, usersCities[id])
+      if (forecast.error) bot.sendMessage(id, `Error: ${forecast.error}`)
 
       await bot.sendMessage(id, `Weather in ${usersCities[id]}`)
       for (const item of forecast) {
