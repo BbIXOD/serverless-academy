@@ -38,7 +38,6 @@ const getLocationCached = cacheAsyncFunction(getLocation)
 const getHourlyForcast = async (city) => {
   if (!city) return { error: 'Sorry, incorrect data, try again, maybe we lost city ' }
 
-
   const loc = await getLocationCached(city)
   if (loc.err) return loc
   const { lat, lon } = loc
