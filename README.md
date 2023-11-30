@@ -19,7 +19,7 @@ Simple servise with registration which allows to create pseudonims for links and
 2. Create .env with your credentials
 3. Type `npm run deploy` inside project dir.
 4. Cross your fingers and hope everything will be fine
-## Using
+## Usage
 1. Register new user by calling `auth/register` with `email` and `password` in body
 2. Verify with `auth/verify`. Give it `email` and `verification_code` (which you recieved from email)
 3. Login with existing `email` and `password` combination to get bearer token with `auth/login`.
